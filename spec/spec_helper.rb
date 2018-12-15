@@ -14,6 +14,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+require 'dotenv/load'
 require 'capybara_helper'
 require 'pry'
 
