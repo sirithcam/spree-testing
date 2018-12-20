@@ -1,24 +1,11 @@
+require 'byebug'
 require 'dotenv/load'
 require 'capybara_helper'
 require 'pry'
 require 'faker'
 
-# Add helpers to all Specs
 Dir['./spec/helpers/**/*.rb'].each { |file| require file }
 Dir['./spec/shared_examples/**/*.rb'].each { |file| require file }
-
-ENV['browser'] ||= 'chrome'
-Capybara.default_driver = ENV['browser'].to_sym
-
-ENV['env'] ||= 'staging'
-Capybara.app_host = case ENV['env']
-                    when 'staging'
-                      'https://example-staging.com'
-                    when 'production'
-                      'https://example.com'
-                    end 
-
-Capybara.run_server = false
 
 RSpec.configure do |config|
   config.include Capybara::DSL
@@ -33,6 +20,8 @@ RSpec.configure do |config|
   end
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
+
+  config.before { Capybara.page.driver.browser.manage.window.resize_to(1240,1400) if ENV['BROWSER'] == 'safari' }
 
   config.after { Capybara.reset_sessions! }
 end
