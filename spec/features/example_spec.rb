@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 feature 'Sample Tests' do
   it_should_behave_like 'example', 'test1'
 
