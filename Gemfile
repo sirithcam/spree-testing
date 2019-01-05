@@ -7,7 +7,9 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 gem 'capybara'
 gem 'dotenv'
 gem 'faker'
+gem 'madison'
 gem 'pry'
 gem 'rspec'
 gem 'rubocop', '~> 0.61.1', require: false
 gem 'selenium-webdriver'
+gem 'show_me_the_cookies'
