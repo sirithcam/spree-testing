@@ -1,14 +1,14 @@
-require 'byebug'
 require 'dotenv/load'
-require 'capybara_helper'
 require 'pry'
 require 'faker'
+require 'capybara/rspec'
+require 'selenium/webdriver'
 
 Dir['./spec/helpers/**/*.rb'].each { |file| require file }
 Dir['./spec/shared_examples/**/*.rb'].each { |file| require file }
 
 RSpec.configure do |config|
-  config.include Capybara::DSL
+  #config.include Capybara::DSL
   config.include MainHelper
 
   config.expect_with :rspec do |expectations|
