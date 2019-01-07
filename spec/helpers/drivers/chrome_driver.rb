@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'capybara/rspec'
-require 'selenium/webdriver'
-
 Capybara.register_driver :chrome do |app|
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
     chromeOptions: {
@@ -18,6 +15,3 @@ Capybara.register_driver :chrome do |app|
     desired_capabilities: capabilities
   )
 end
-
-Capybara.default_driver = :chrome
-Capybara.app_host = ENV['APP_HOST']
