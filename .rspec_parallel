@@ -1,0 +1,4 @@
+--require spec_helper
+--format progress
+--format ParallelTests::RSpec::SummaryLogger --out logs/spec_summary_<%=Time.now.strftime('%Y-%m-%d_%H:%M') %>.log
+--format ParallelTests::RSpec::FailuresLogger --out logs/failing_specs_<%=Time.now.strftime('%Y-%m-%d_%H:%M') %>.log

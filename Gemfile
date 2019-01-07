@@ -8,6 +8,7 @@ gem 'capybara'
 gem 'dotenv'
 gem 'faker'
 gem 'madison'
+gem 'parallel_tests'
 gem 'pry'
 gem 'rspec'
 gem 'rubocop', '~> 0.61.1', require: false
