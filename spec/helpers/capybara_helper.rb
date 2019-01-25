@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
-Capybara.default_driver = ENV['BROWSER'].to_sym
-
-Capybara.app_host = ENV['APP_HOST']
+Capybara.configure do |config|
+  include DriverHelper
+  config.default_driver = ENV['BROWSER'].to_sym
+  config.app_host = ENV['APP_HOST']
+end

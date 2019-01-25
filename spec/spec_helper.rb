@@ -3,6 +3,7 @@
 require 'dotenv/load'
 require 'pry'
 require 'faker'
+require 'os'
 require 'capybara/rspec'
 require 'selenium/webdriver'
 
