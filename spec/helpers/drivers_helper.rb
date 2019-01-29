@@ -9,12 +9,12 @@ module DriverHelper
     elsif OS.mac?
       'mac'
     else
-      raise Error::WebDriverError, "unknown os: #{OS.host}"
+      raise "unknown os: #{OS.host}"
     end
   end
 
   def path_to_driver(driver)
-    path = "#{Dir.pwd}/vendor/#{driver}_#{operating_system}"
+    path = File.join(Dir.pwd, 'vendor', "#{driver}_#{operating_system}")
     path = "#{path}.exe" if operating_system == 'windows'
     path
   end
