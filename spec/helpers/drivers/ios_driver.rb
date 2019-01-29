@@ -1,4 +1,6 @@
-desired_caps_ios = { 
+# frozen_string_literal: true
+
+desired_caps_ios = {
   'platformName': 'iOS',
   'platformVersion': '12.1',
   'browserName': 'Safari',
@@ -16,10 +18,9 @@ Capybara.register_driver(:ios) do |app|
   }
 
   all_options = {
-    appium_lib:  appium_lib_options,
-    caps:        desired_caps_ios
+    appium_lib: appium_lib_options,
+    caps: desired_caps_ios
   }
 
   Appium::Capybara::Driver.new app, all_options
 end
-

@@ -12,7 +12,7 @@ Capybara.configure do |config|
   if ENV['BROWSER'] == 'ios' || ENV['BROWSER'] == 'android'
     # Default Appium server ip and port
     config.server_host = '0.0.0.0'
-    config.server_port = '56844' 
+    config.server_port = '56844'
   end
 end
 
