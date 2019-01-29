@@ -37,6 +37,7 @@ GEM
     mini_portile2 (2.3.0)
     nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
+    os (1.0.0)
     parallel (1.12.1)
     parallel_tests (2.27.1)
       parallel
@@ -93,6 +94,7 @@ DEPENDENCIES
   dotenv
   faker
   madison
+  os
   parallel_tests
   pry
   rspec

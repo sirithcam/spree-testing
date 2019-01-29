@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
-Capybara.default_driver = ENV['BROWSER'].to_sym
+Capybara.configure do |config|
+  include DriverHelper
 
-Capybara.app_host = ENV['APP_HOST']
+  config.default_driver = ENV['BROWSER'].to_sym
 
-Capybara.save_path = 'logs/screenshots'
+  config.app_host = ENV['APP_HOST']
+
+  config.save_path = 'logs/screenshots'
+end
 
 Capybara::Screenshot.register_driver(ENV['BROWSER'].to_sym) do |driver, path|
   driver.browser.save_screenshot(path)
