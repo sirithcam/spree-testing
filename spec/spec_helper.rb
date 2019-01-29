@@ -4,6 +4,7 @@ require 'dotenv/load'
 require 'pry'
 require 'faker'
 require 'capybara/rspec'
+require 'capybara-screenshot/rspec'
 require 'selenium/webdriver'
 
 Dir['./spec/helpers/**/*.rb'].each { |file| require file }
@@ -24,5 +25,5 @@ RSpec.configure do |config|
 
   config.before { Capybara.page.driver.browser.manage.window.resize_to(1240, 1400) if ENV['BROWSER'] == 'safari' }
 
-  config.after { Capybara.reset_sessions! }
+  config.append_after { Capybara.reset_sessions! }
 end
