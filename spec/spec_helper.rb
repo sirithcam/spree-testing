@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'appium_capybara'
 require 'dotenv/load'
 require 'pry'
 require 'faker'

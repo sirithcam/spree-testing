@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module DriverHelper
+module DriversHelper
   def operating_system
     if OS.linux?
       'linux'
