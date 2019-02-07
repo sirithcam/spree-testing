@@ -5,7 +5,8 @@ desired_android_caps = {
   deviceName: '5.0.1',
   platformName: 'Android',
   automationName: 'UiAutomator2',
-  platformVersion: '5.0.1'
+  avd: 'Nexus_5X_API_28_x86',
+  platformVersion: '9'
 }
 
 url = 'http://localhost:4723/wd/hub'
