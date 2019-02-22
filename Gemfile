@@ -12,7 +12,7 @@ gem 'faker'
 gem 'madison'
 gem 'os'
 gem 'parallel_tests'
-gem 'pry'
+gem 'pry-byebug'
 gem 'rspec'
 gem 'rubocop', '~> 0.61.1', require: false
 gem 'selenium-webdriver'
