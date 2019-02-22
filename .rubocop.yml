@@ -1,4 +1,8 @@
+require: rubocop-rspec
+
 Metrics/LineLength:
   Max: 120 
 Metrics/BlockLength:
+  Enabled: false
+Capybara/FeatureMethods:
   Enabled: false
