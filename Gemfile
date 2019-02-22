@@ -15,5 +15,6 @@ gem 'parallel_tests'
 gem 'pry-byebug'
 gem 'rspec'
 gem 'rubocop', '~> 0.61.1', require: false
+gem 'rubocop-rspec'
 gem 'selenium-webdriver'
 gem 'show_me_the_cookies'
