@@ -70,6 +70,8 @@ end
 
 ### Tags
 
+TBA
+
 ### Helpers
 
 Names of each helper module should contain name of a module or page that is in the app itself in upper camel case system (e.g. `AdminPanelHelper`).<br>
@@ -160,11 +162,28 @@ Those are:
 
 **IMPORTANT! Your local .env file cannot be uploaded to a repository!**
 
-### Logs
+### Logs and summary
+
+All log files are stored in `logs/` directory and are excluded from git. After each scenario log with test summary are created.<br>
+Also, when any test is failing, screenshot in which a fail occurs is taken and stored in `logs/screenshots` and the exect directory and name of a screenshot is being displayed in summary just after a name of failing error.
+
+Naming: `spec_summary_YYYY-MM-DD-hh:mm:ss.log`
+
+**Preview:**
+
+`cat <log_path>`
+
+`open <screenshot_path>`
+
+*Note: Configs for summary and logs are stored in `.rspec` and `.rspec_parallel`.*
 
 ### Environment Variables
 
+TBA
+
 ### Drivers
+
+TBA
 
 ## Default options
 
