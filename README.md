@@ -27,6 +27,8 @@ or
 
 `parallel_test <dir>` 
 
+Parallel mode configuration file is `.rspec_parallel`.
+
 #### Run in specific browser:
 
 `BROWSER=firefox rspec <dir>`
@@ -41,7 +43,7 @@ or
 
 ## Writing's conventions
 
-#### Test scheme
+### Test scheme
 ```
 RSpec.feature "User's Detailed Page" do
   describe 'Visibility' do
@@ -66,26 +68,114 @@ describe 'Visibility' do
 end
 ```
 
-#### Helpers
+### Tags
 
-Names of each helper module should contain name of a module or page that is in the app itself in upper camel case system (e.g. `AdminPanelHelper`).
+### Helpers
 
-File has to be stored in `spec/helpers/` directory.
-
+Names of each helper module should contain name of a module or page that is in the app itself in upper camel case system (e.g. `AdminPanelHelper`).<br>
+File has to be stored in `spec/helpers/` directory.<br>
 After creating new helper add this line to `spec/spec_helper.rb`:
 
 `config.include YourModuleHelper`
 
-after all `config.include` lines.
+After all `config.include` lines.
+
+### Shared examples
+
+#### When to use them?
+
+There will be a lot of cases in which tests will look very similar to each other and a code can be shared between them. In this situation `shared_examples` are perfect to use.<br>
+Also sometimes there will be need to check the same page as a registered User and a Guest. In this situation `shared_examples` with many scenarios are handy.
+
+#### How to use them?
+
+All `shared_examples` files are stored in `spec/shared_examples` and are named the same as file that uses them but without `_spec` in the name. E.g. `spec/shared_examples/checkout_page.rb`.
+
+**Scheme:**
+
+In `spec/shared_examples/*.rb`:
+
+```
+shared_examples name do |var1, var2, ..., varN|
+  scenario name do
+    ...
+  end
+  
+  scenario var2 do
+    ...
+  end
+end
+```
+
+*Note: In `shared_examples` there can be one or more scenarios.*
+
+**Usage:**
+
+In `spec/feature/*_spec.rb` file add this:
+
+`it_should_behave_like name, var1, var2, ..., varN`
+
+### Images and upload files
+
+All non-Ruby files that are used in the test scenarios has to be stored in `spec/fixtures` directory.<br>
+E.g. images, documents etc.
+
+### Rubocop
+
+Just before making Pull Request with your code, please make sure to use `rubocop` to check your code and make all requested changes. Some of them can be ommited, this needs to be discused separately in each project.
+
+**Usage:**
+
+`rubocop <dir>`
+
+or for auto-correct:
+
+`rubocop -a <dir>`
+
+*Note: `rubocop` configs are stored in `.rubocop.yml`*
+
+### Debugging
+
+To debug your code simply add `binding.pry` before the line that you want to debugg.
+
+#### Why `pry` over `byebug`??
+
+Actually, we are using the mix of both gems called `pry-byebug` which merges both gem's features into one big gem! 
+
+`pry` gives us a powerfull console which is similar to Ruby's `irb` in which we can freely paste block of codes and has nice syntax colors.
+
+`byebug` on the other hand, is a great tool to debugg our tests step by step, which in pure `pry` is impossible.
+
+*Note: All `pry-byebug` config are stored in `.pryrc` file. Also all shortcuts from pure `byebug` are stored there so you can use them freely.*
+
+### .gitingore
+
+In this file we store all file names and file's extentions that we do not want to send into our repository.<br>
+Those are:
+- All log files
+- Files with passwords
+- Text editor's files
+- Operating System temporary files
+- etc.
+
+**IMPORTANT! Your local .env file cannot be uploaded to a repository!**
+
+### Logs
+
+### Environment Variables
+
+### Drivers
 
 ## Default options
+
+**.env:**
 
 ```
 HEADLESS=1
 FULLSCREEN=1
 BROWSER=chrome
 ```
-#### Why?
+### Why?
 
 **HEADLESS** - testing should always be enabled on `master` branch because `master` branch should be used only for starting tests on staging or production. `HEADLESS=0` may be used only on a branch where tests are being writing on but should be set back to 1 before pushing last commit.
 
@@ -94,5 +184,5 @@ If a test needs a smaller resolution(e.g. to scroll down) then we can use this i
 
 `Capybara.page.driver.browser.manage.window.resize_to(1240, 1400)`
 
-**BROWSER** - Google Chrome browser is the most popular browser right now. And developers on real app repositorium uses headless chrome browser in their test cases. But this value is the most flexible one as it depends on each project.
+**BROWSER** - Google Chrome browser is the most popular browser right now. And developers on real app repository uses headless Chrome browser on their test cases. But this value is the most flexible one as it depends on each project.
 
