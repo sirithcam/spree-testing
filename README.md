@@ -56,13 +56,13 @@ end
 
 Use `RSpec.feature` at the beggining of all tests, without this line tests won't work.
 
-Use `scenario` over `it`, `scenario` is dedicated for Feature Tests and `it` for unit tests.
+Use `scenario` over `it`, `scenario` is dedicated for Feature Tests and `it` for Unit Tests.
 
 If you want to split your tests use `describe` and then `context`. E.g.:
 
 ```
-describe 'Visibility' do
-  context 'Header' do
+describe 'Header' do
+  context 'Visibility' do
     ...
   end
 end
@@ -120,7 +120,7 @@ In `spec/feature/*_spec.rb` file add this:
 ### Images and upload files
 
 All non-Ruby files that are used in the test scenarios has to be stored in `spec/fixtures` directory.<br>
-E.g. images, documents etc.
+E.g. images, documents, etc.
 
 ### Rubocop
 
