@@ -173,6 +173,10 @@ In `spec/feature/*_spec.rb` file add this:
 
 `it_should_behave_like name, var1, var2, ..., varN`
 
+### Aggregate Failures
+
+TBA
+
 ### Images and upload files
 
 All non-Ruby files that are used in the test scenarios has to be stored in `spec/fixtures` directory.<br>
