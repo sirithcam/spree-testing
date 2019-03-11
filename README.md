@@ -60,6 +60,8 @@ or
 
 `HEADLESS=0 rspec <dir>`
 
+*Note: HEADLESS testing is not supported in Safari browser.*
+
 #### Run in non-fullscreen mode:
 
 `FULLSCREEN=0 rspec <dir>`
