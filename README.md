@@ -9,8 +9,31 @@
 8. `cp .env.sample .env`
 9. Setup all necessary environment variables in `.env`.
 
+### Setup .env
 
-## Usage
+In order to launch raw tests all variables from `.env.sample` has to be filled with proper values.
+
+#### Syntax:
+
+In each operating system, it is assumed that all environment variables will be uppercase so please follow this convention.
+
+`VARIABLE_STRING='string'`<br>
+`VARIABLE_INT=1`
+
+#### Necessary Variables
+
+`APP_HOST` - URL to your project, e.g. `APP_HOST='https://secret-project.herokuapp.com'`
+
+`#APP_HOST= # Production` - commented line for production URL. If you want tests to be performed on production environment comment previous line and uncomment this one.
+
+`BROWSER` - value should be the same as a name of the browser registered in `spec/helpers/drivers` directory.<br>
+E.g. `Capybara.register_driver :chrome do |app|` in this line of code we register Chrome Browser and the name is `:chrome` set as a Ruby symbol. In our `.env` file we should convert it to a normal string, so the value will be `BROWSER='chrome'`.
+
+`FULLSCREEN` - takes two values, `0` as false and `1` as true. Determinates if a tests should be launched in fullscreen mode.
+
+`HEADLESS` - takes two values, `0` as false and `1` as true. Determinates if a tests should be launched in headless browser mode.
+
+## Running Tests
 #### Run all specs:
 
 `rspec <dir>`
@@ -27,7 +50,7 @@ or
 
 `parallel_test <dir>` 
 
-Parallel mode configuration file is `.rspec_parallel`.
+*NOTE: Parallel mode configuration file is `.rspec_parallel`.*
 
 #### Run in specific browser:
 
@@ -70,7 +93,38 @@ end
 
 ### Tags
 
-TBA
+Tags in RSpec are very usefull when our tests are very complex. By using Tags we can divide our test cases into several groups/sections so when we need to run tests only on one section of our application we can run it using aforementioned Tags.
+
+E.g. we can divide tests by it's priority from `low` to `high` and when we do not have so much time for running all tests we can simply run only tests that has `high` priority instead.
+
+#### Syntax
+
+Tags should be assigned after a name of a test or `describe/context` block by putting a hash with keys and values. 
+
+E.g.
+
+```
+scenario 'User is created`, priority: 'high' do
+  ...
+end
+```
+
+```
+describe 'Checkout', { regression: true, priority: 'medium' } do
+  ...
+end
+```
+
+#### Usage
+
+Filter examples with a simple tag:<br>
+`rspec <dir> -t regression`
+
+Filter examples with a `name:value` tag:<br>
+`rspec <dir> -t priority:high`
+
+Exclude examples:<br>
+`rspec <dir> -t ~regression`
 
 ### Helpers
 
@@ -177,13 +231,13 @@ Naming: `spec_summary_YYYY-MM-DD-hh:mm:ss.log`
 
 *Note: Configs for summary and logs are stored in `.rspec` and `.rspec_parallel`.*
 
-### Environment Variables
-
-TBA
-
 ### Drivers
 
-TBA
+Each driver has to be registered within `Capybara` before we can use them. All configuration files are stored in `spec/helpers/drivers` directory and are named `*_driver.rb`. Inside of this files we can determine the browser options and it's path. 
+
+The current driver's binary file path is `vendor/`. All binary files for each browser is stored there. 
+
+In order to update a driver just replace old binary file with the newest one.
 
 ## Default options
 
