@@ -48,7 +48,7 @@ or
 
 #### Run specs in parallel mode:
 
-`parallel_test <dir>` 
+`parallel_rspec <dir>` 
 
 *NOTE: Parallel mode configuration file is `.rspec_parallel`.*
 
