@@ -27,7 +27,7 @@ In each operating system, it is assumed that all environment variables will be u
 `#APP_HOST= # Production` - commented line for production URL. If you want tests to be performed on production environment comment previous line and uncomment this one.
 
 `BROWSER` - value should be the same as a name of the browser registered in `spec/helpers/drivers` directory.<br>
-E.g. `Capybara.register_driver :chrome do |app|` in this line we register Chrome Browser and the name is set as a Ruby symbol. In our `.env` file we should convert it to a normal string, so the value will be `BROWSER='chrome'`.
+E.g. `Capybara.register_driver :chrome do |app|` in this line we register Chrome Browser and the name `:chrome` is set as a Ruby symbol. In our `.env` file we should convert it to a normal string, so the value will be `BROWSER='chrome'`.
 
 `FULLSCREEN` - takes two values, `0` as false and `1` as true. Determinates if tests should be launched in fullscreen mode.
 
