@@ -131,6 +131,17 @@ Exclude examples:<br>
 ### Helpers
 
 Names of each helper module should contain name of a module or page that is in the app itself in upper camel case system (e.g. `AdminPanelHelper`).<br>
+
+#### Module scheme
+
+'''
+module AdminPanelHelper
+  def create_user(username, password)
+    ...
+  end
+end
+'''
+
 File has to be stored in `spec/helpers/` directory.<br>
 After creating new helper add this line to `spec/spec_helper.rb`:
 
@@ -142,12 +153,12 @@ After all `config.include` lines.
 
 #### When to use them?
 
-There will be a lot of cases in which tests will look very similar to each other and a code can be shared between them. In this situation `shared_examples` are perfect to use.<br>
-Also sometimes there will be need to check the same page as a registered User and a Guest. In this situation `shared_examples` with many scenarios are handy.
+There will be a lot of cases in which tests will look very similar to each other and a code can be shared between them. In this situation `shared_examples` are perfect.<br>
+Also sometimes there will be a need to check the same page as a registered User and a Guest. In this situation `shared_examples` with many scenarios will be handy.
 
 #### How to use them?
 
-All `shared_examples` files are stored in `spec/shared_examples` and are named the same as file that uses them but without `_spec` in the name. E.g. `spec/shared_examples/checkout_page.rb`.
+All `shared_examples` files are stored in `spec/shared_examples` and are named the same way as file that uses them but without `_spec` in the name. E.g. `spec/shared_examples/checkout_page.rb`.
 
 **Scheme:**
 
@@ -165,7 +176,7 @@ shared_examples name do |var1, var2, ..., varN|
 end
 ```
 
-*Note: In `shared_examples` there can be one or more scenarios.*
+*Note: In `shared_examples` there could be more than one scenario.*
 
 **Usage:**
 
@@ -179,8 +190,7 @@ TBA
 
 ### Images and upload files
 
-All non-Ruby files that are used in the test scenarios has to be stored in `spec/fixtures` directory.<br>
-E.g. images, documents, etc.
+All non-Ruby files that are used in the test scenarios have to be stored in `spec/fixtures` directory.<br>
 
 ### Rubocop
 
@@ -204,11 +214,11 @@ To debug your code simply add `binding.pry` before the line that you want to deb
 
 Actually, we are using the mix of both gems called `pry-byebug` which merges both gem's features into one big gem! 
 
-`pry` gives us a powerfull console which is similar to Ruby's `irb` in which we can freely paste block of codes and has nice syntax colors.
+`pry` gives us a powerfull console which is similar to Ruby's `irb` in which we can freely paste block of codes and it has nice syntax colors.
 
 `byebug` on the other hand, is a great tool to debugg our tests step by step, which in pure `pry` is impossible.
 
-*Note: All `pry-byebug` config are stored in `.pryrc` file. Also all shortcuts from pure `byebug` are stored there so you can use them freely.*
+*Note: All `pry-byebug` configs are stored in `.pryrc` file. Also all shortcuts from pure `byebug` are stored there, so you can use them freely.*
 
 ### .gitingore
 
