@@ -15,7 +15,7 @@ In order to launch raw tests all variables from `.env.sample` has to be filled w
 
 #### Syntax:
 
-In each operating system, it is assumed that all environment variables will be uppercase so please follow this convention.
+In each operating system, it is assumed that all environment variables will be uppercase, so please follow this convention.
 
 `VARIABLE_STRING='string'`<br>
 `VARIABLE_INT=1`
@@ -27,11 +27,11 @@ In each operating system, it is assumed that all environment variables will be u
 `#APP_HOST= # Production` - commented line for production URL. If you want tests to be performed on production environment comment previous line and uncomment this one.
 
 `BROWSER` - value should be the same as a name of the browser registered in `spec/helpers/drivers` directory.<br>
-E.g. `Capybara.register_driver :chrome do |app|` in this line of code we register Chrome Browser and the name is `:chrome` set as a Ruby symbol. In our `.env` file we should convert it to a normal string, so the value will be `BROWSER='chrome'`.
+E.g. `Capybara.register_driver :chrome do |app|` in this line we register Chrome Browser and the name is set as a Ruby symbol. In our `.env` file we should convert it to a normal string, so the value will be `BROWSER='chrome'`.
 
-`FULLSCREEN` - takes two values, `0` as false and `1` as true. Determinates if a tests should be launched in fullscreen mode.
+`FULLSCREEN` - takes two values, `0` as false and `1` as true. Determinates if tests should be launched in fullscreen mode.
 
-`HEADLESS` - takes two values, `0` as false and `1` as true. Determinates if a tests should be launched in headless browser mode.
+`HEADLESS` - takes two values, `0` as false and `1` as true. Determinates if tests should be launched in headless browser mode.
 
 ## Running Tests
 #### Run all specs:
@@ -81,7 +81,7 @@ end
 
 Use `RSpec.feature` at the beggining of all tests, without this line tests won't work.
 
-Use `scenario` over `it`, `scenario` is dedicated for Feature Tests and `it` for Unit Tests.
+Use `scenario` over `it`. `scenario` is dedicated for Feature Tests and `it` for Unit Tests.
 
 If you want to split your tests use `describe` and then `context`. E.g.:
 
@@ -95,7 +95,7 @@ end
 
 ### Tags
 
-Tags in RSpec are very usefull when our tests are very complex. By using Tags we can divide our test cases into several groups/sections so when we need to run tests only on one section of our application we can run it using aforementioned Tags.
+Tags in RSpec are very usefull when our tests are very complex. By using Tags we can divide our test cases into several groups/sections, so when we need to run tests only on one section of our application we can run it using aforementioned Tags.
 
 E.g. we can divide tests by it's priority from `low` to `high` and when we do not have so much time for running all tests we can simply run only tests that has `high` priority instead.
 
@@ -224,7 +224,7 @@ Those are:
 
 ### Logs and summary
 
-All log files are stored in `logs/` directory and are excluded from git. After each scenario log with test summary are created.<br>
+All log files are stored in `logs/` directory and are excluded from git. After each scenario log with test summary is created.<br>
 Also, when any test is failing, screenshot in which a fail occurs is taken and stored in `logs/screenshots` and the exect directory and name of a screenshot is being displayed in summary just after a name of failing error.
 
 Naming: `spec_summary_YYYY-MM-DD-hh:mm:ss.log`
@@ -256,12 +256,12 @@ BROWSER=chrome
 ```
 ### Why?
 
-**HEADLESS** - testing should always be enabled on `master` branch because `master` branch should be used only for starting tests on staging or production. `HEADLESS=0` may be used only on a branch where tests are being writing on but should be set back to 1 before pushing last commit.
+**HEADLESS** - testing should always be enabled on `master` branch because `master` branch should be used only for starting tests on staging or production. `HEADLESS=0` may be used only on a branch where tests are written but should be set back to 1 before pushing last commit.
 
-**FULLSCREEN** - normal User browsers in fullscreen mode in 95% of time so we should test it like this. 
-If a test needs a smaller resolution(e.g. to scroll down) then we can use this in test itself:
+**FULLSCREEN** - Users browse in fullscreen mode 95% of the time, so we should test it that way. 
+If a test needs a smaller resolution(e.g. to scroll down) then we can use this in the test itself:
 
 `Capybara.page.driver.browser.manage.window.resize_to(1240, 1400)`
 
-**BROWSER** - Google Chrome browser is the most popular browser right now. And developers on real app repository uses headless Chrome browser on their test cases. But this value is the most flexible one as it depends on each project.
+**BROWSER** - Google Chrome browser is the most popular browser right now. And developers on real app repository use headless Chrome browser on their test cases. But this value is the most flexible one as it depends on each project.
 
