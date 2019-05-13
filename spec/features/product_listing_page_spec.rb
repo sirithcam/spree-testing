@@ -1,12 +1,28 @@
 RSpec.feature 'Product Listing Page' do
+  before { visit '/' }
+
   describe 'Sidebar' do
-    scenario 'has Categories'
-    scenario 'has Brands'
-    scenario 'Categories leads to proper page'
-    scenario 'Brands leads to proper page'
-    scenario 'Categories has proper items'
-    scenario 'Brands has proper items'
-    scenario 'Categories has sub-categories with proper items'
+    scenario 'has taxonomies' do
+      taxonomies = all('.taxonomy-root').map { |taxonomy| taxonomy.text.gsub('Shop by ', '') }
+
+      childs = {}
+      all('.list-group').each_with_index do |group, index|
+        childs[taxonomies[index]] = group.all('.list-group-item').map(&:text) 
+      end
+
+      login_as_admin
+
+      taxonomies.each do |taxonomy|
+        visit '/admin/taxonomies'
+        find('tr', text: taxonomy).find('.icon-edit').click
+        wait_for(error: 'Tree not loaded.') { all('#taxonomy_tree a').size == childs[taxonomy].size + 1 }
+        childs[taxonomy].each { |child| expect(page).to have_css('#taxonomy_tree a', text: child) }
+      end
+    end
+
+    scenario 'taxonomies leads to proper page'
+    scenario 'taxonomies has proper items'
+    scenario 'taxonomies has sub-taxonomies with proper items'
     scenario 'selects Price Range'
   end
 

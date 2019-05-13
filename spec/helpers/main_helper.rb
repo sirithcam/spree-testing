@@ -23,4 +23,11 @@ module MainHelper
   def scroll_to(element)
     Capybara.current_session.driver.browser.execute_script('arguments[0].scrollIntoView(true);', element.native)
   end
+
+  def login_as_admin
+    visit '/login'
+    fill_in 'Email', with: ENV['ADMIN_LOGIN']
+    fill_in 'Password', with: ENV['ADMIN_PASSWORD']
+    find('.btn-lg').click
+  end
 end
