@@ -20,7 +20,15 @@ RSpec.feature 'Product Listing Page' do
       end
     end
 
-    scenario 'taxonomies leads to proper page'
+    scenario 'taxonomy childs leads to proper page' do
+      childs = all('.list-group-item').map(&:text)
+
+      childs.each do |child|
+        click_link child
+        expect(page).to have_current_path "/t/#{child.downcase}"
+      end
+    end
+
     scenario 'taxonomies has proper items'
     scenario 'taxonomies has sub-taxonomies with proper items'
     scenario 'selects Price Range'
