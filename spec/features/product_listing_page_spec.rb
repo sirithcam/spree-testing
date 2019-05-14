@@ -1,5 +1,6 @@
 RSpec.feature 'Product Listing Page' do
-  let(:subtaxon_url) { '/t/clothing' }
+  let(:subtaxon_url)    { '/t/clothing' }
+  let(:price_range_url) { '/t/spree' }
 
   before { visit '/' }
 
@@ -64,7 +65,30 @@ RSpec.feature 'Product Listing Page' do
       end
     end
 
-    scenario 'selects Price Range'
+    scenario 'selects Price Range' do
+      visit price_range_url
+      price_ranges = all('.nowrap').map(&:text)
+
+      price_ranges.each do |price_range|
+        range = price_range.split.map { |price| price.delete('$-').to_f }
+        range.delete(0)
+
+        find('.nowrap', text: price_range).click
+        find('#sidebar_products_search .btn').click
+
+        all_prices = all('.price').map { |price| price.text.delete('$').to_f }
+
+        if price_range.include?('over')
+          all_prices.each { |price| expect(price).to be >= range[0] }
+        elsif price_range.include?('Under')
+          all_prices.each { |price| expect(price).to be <= range[0] }
+        else
+          all_prices.each { |price| expect(price).to be_between(range[0], range[1]).inclusive }
+        end
+
+        find('.nowrap', text: price_range).click
+      end
+    end
   end
 
   describe 'Products' do
