@@ -14,6 +14,7 @@ Dir['./spec/shared_examples/**/*.rb'].each { |file| require file }
 
 RSpec.configure do |config|
   config.include MainHelper
+  config.include AdminHelper
 
   config.filter_run_excluding :block => nil
 
