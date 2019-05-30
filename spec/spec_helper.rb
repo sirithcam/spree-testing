@@ -11,6 +11,7 @@ require 'selenium/webdriver'
 
 Dir['./spec/helpers/**/*.rb'].each { |file| require file }
 Dir['./spec/shared_examples/**/*.rb'].each { |file| require file }
+Dir['./spec/support/**/*.rb'].each { |file| require file }
 
 RSpec.configure do |config|
   config.include MainHelper

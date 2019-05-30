@@ -2,7 +2,7 @@
 
 module AdminHelper
   def find_admin_item(name)
-    visit '/admin/products'
+    visit Router.new.admin_products_path
     fill_in 'Quick search..', with: name
     # There is no button in search field so we need to hit enter
     find('#quick_search').send_keys :enter

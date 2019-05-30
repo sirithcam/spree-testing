@@ -1,8 +1,7 @@
 RSpec.feature 'Product Listing Page' do
-  let(:subtaxon_url)    { '/t/clothing' }
-  let(:price_range_url) { '/t/spree' }
+  let(:router)  { Router.new }
 
-  before { visit '/' }
+  before { visit router.root_path }
 
   scenario 'taxonomies has proper items' do
     taxons = all('.list-group-item').map(&:text)
@@ -20,12 +19,12 @@ RSpec.feature 'Product Listing Page' do
   end
 
   scenario 'taxonomies has sub-taxonomies with proper items' do
-    visit subtaxon_url
+    visit router.subtaxon_plp_path
     taxons = all('.subtaxon-title').map(&:text)
     login_as_admin
 
     taxons.each do |taxon|
-      visit subtaxon_url
+      visit router.subtaxon_plp_path
 
       parent_object = find('h5', text: /\A#{taxon}\z/).find(:xpath, '..')
       products = parent_object.all('.product-body').map(&:text)
@@ -49,7 +48,7 @@ RSpec.feature 'Product Listing Page' do
       login_as_admin
 
       taxonomies.each do |taxonomy|
-        visit '/admin/taxonomies'
+        visit router.admin_taxonomies_path
         find('tr', text: taxonomy).find('.icon-edit').click
         wait_for(error: 'Tree not loaded.') { all('#taxonomy_tree a').size == taxons[taxonomy].size + 1 }
         taxons[taxonomy].each { |taxon| expect(page).to have_css('#taxonomy_tree a', text: taxon) }
@@ -66,7 +65,7 @@ RSpec.feature 'Product Listing Page' do
     end
 
     scenario 'selects Price Range' do
-      visit price_range_url
+      visit router.price_range_plp_path
       price_ranges = all('.nowrap').map(&:text)
 
       price_ranges.each do |price_range|
@@ -91,16 +90,34 @@ RSpec.feature 'Product Listing Page' do
     end
   end
 
-  describe 'Products' do
-    scenario 'has name'
-    scenario 'has price'
-    scenario 'has image'
-    scenario 'has link to detailed page'
+  scenario 'Products has name, price and image' do
+    product = all('.product-list-item').sample
+    product_info = {
+      name: product.find('a').text,
+      image: product.find('img')[:src].split('/').last,
+      price: product.find('.price')[:content]
+    }
+
+    login_as_admin
+
+    find_admin_item(product_info[:name])
+
+    aggregate_failures do
+      expect(find('#product_name').value).to eq product_info[:name]
+      expect(find('#product_price').value).to eq product_info[:price]
+
+      click_link 'Images'
+
+      images = all('#content img').map { |img| img[:src].split('/').last }
+
+      expect(images).to include product_info[:image]
+    end
   end
 
   describe 'Pagination' do
     scenario 'has Next link'
     scenario 'has Last link'
+    scenario 'has Previous link'
     scenario 'has First link'
     scenario 'has proper active page'
   end

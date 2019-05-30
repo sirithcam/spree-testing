@@ -25,7 +25,7 @@ module MainHelper
   end
 
   def login_as_admin
-    visit '/login'
+    visit Router.new.login_path
     fill_in 'Email', with: ENV['ADMIN_LOGIN']
     fill_in 'Password', with: ENV['ADMIN_PASSWORD']
     find('.btn-lg').click
