@@ -115,10 +115,41 @@ RSpec.feature 'Product Listing Page' do
   end
 
   describe 'Pagination' do
-    scenario 'has Next link'
-    scenario 'has Last link'
-    scenario 'has Previous link'
-    scenario 'has First link'
-    scenario 'has proper active page'
+    scenario 'has Next link' do
+      active = find('.pagination .active').text.to_i
+      find('.pagination').click_link 'Next'
+
+      expect(find('.pagination .active').text.to_i).to eq active + 1
+    end
+
+    scenario 'has Last link' do
+      find('.pagination').click_link 'Last'
+      
+      expect(all('.pagination .page').last[:class]).to include 'active'
+    end
+
+    scenario 'has Previous link' do
+      all('.pagination .page').reject { |page| page[:class].include? 'active' }.sample.find('a').click
+
+      active = find('.pagination .active').text.to_i
+      find('.pagination').click_link 'Prev'
+
+      expect(find('.pagination .active').text.to_i).to eq active - 1
+    end
+
+    scenario 'has First link' do
+      all('.pagination .page').reject { |page| page[:class].include? 'active' }.sample.find('a').click
+
+      find('.pagination').click_link 'First'
+
+      expect(find('.pagination .active').text.to_i).to eq 1
+    end
+
+    scenario 'has proper active page' do
+      all('.pagination .page').reject { |page| page[:class].include? 'active' }.sample.find('a').click
+      page_number = find('.pagination .active').text
+
+      expect(page).to have_current_path "/?page=#{page_number}"
+    end
   end
 end
