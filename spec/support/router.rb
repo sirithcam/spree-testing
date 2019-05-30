@@ -24,4 +24,16 @@ class Router
   def login_path
     '/login'
   end
+
+  def products_path
+    '/products'
+  end
+
+  def logout_path
+    '/logout'
+  end
+
+  def variants_item_path
+    '/admin/products/ruby-on-rails-baseball-jersey/'
+  end
 end

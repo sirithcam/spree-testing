@@ -14,4 +14,9 @@ module AdminHelper
 
     wait_for { page.has_css?('#s2id_product_taxon_ids') }
   end
+
+  def random_admin_item
+    visit Router.new.admin_products_path
+    all('#listing_products .action-edit').sample.click
+  end
 end
