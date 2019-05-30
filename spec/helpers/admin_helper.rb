@@ -13,5 +13,5 @@ module AdminHelper
     find('a', text: /\A#{name}\z/).click
 
     wait_for { page.has_css?('#s2id_product_taxon_ids') }
-  end 
+  end
 end

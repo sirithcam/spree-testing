@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 RSpec.feature 'Product Listing Page' do
-  let(:router)  { Router.new }
+  let(:router) { Router.new }
 
   before { visit router.root_path }
 
   scenario 'taxonomies has proper items' do
     taxons = all('.list-group-item').map(&:text)
-    login_as_admin 
+    login_as_admin
 
     taxons.each do |taxon|
       visit "/t/#{taxon.downcase}"
@@ -42,7 +44,7 @@ RSpec.feature 'Product Listing Page' do
 
       taxons = {}
       all('.list-group').each_with_index do |group, index|
-        taxons[taxonomies[index]] = group.all('.list-group-item').map(&:text) 
+        taxons[taxonomies[index]] = group.all('.list-group-item').map(&:text)
       end
 
       login_as_admin
@@ -78,11 +80,11 @@ RSpec.feature 'Product Listing Page' do
         all_prices = all('.price').map { |price| price.text.delete('$').to_f }
 
         if price_range.include?('over')
-          all_prices.each { |price| expect(price).to be >= range[0] }
+          expect(all_prices).to all(be >= range[0])
         elsif price_range.include?('Under')
-          all_prices.each { |price| expect(price).to be <= range[0] }
+          expect(all_prices).to all(be <= range[0])
         else
-          all_prices.each { |price| expect(price).to be_between(range[0], range[1]).inclusive }
+          expect(all_prices).to all(be_between(range[0], range[1]).inclusive)
         end
 
         find('.nowrap', text: price_range).click
@@ -124,7 +126,7 @@ RSpec.feature 'Product Listing Page' do
 
     scenario 'has Last link' do
       find('.pagination').click_link 'Last'
-      
+
       expect(all('.pagination .page').last[:class]).to include 'active'
     end
 
