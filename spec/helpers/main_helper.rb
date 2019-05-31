@@ -53,4 +53,8 @@ module MainHelper
   def click_unactive_pagination
     all('.pagination .page').reject { |page| page[:class].include? 'active' }.sample.find('a').click
   end
+
+  def convert_to_float(object)
+    object.text.delete('-$').to_f
+  end
 end

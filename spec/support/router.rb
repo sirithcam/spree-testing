@@ -36,4 +36,8 @@ class Router
   def variants_item_path
     '/admin/products/ruby-on-rails-baseball-jersey/'
   end
+
+  def cart_path
+    '/cart'
+  end
 end
