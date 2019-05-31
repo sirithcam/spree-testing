@@ -81,7 +81,15 @@ RSpec.feature 'Cart' do
     end
 
     scenario 'updates cart' do
-      # binding.pry
+      find('.line_item_quantity').set 5
+
+      click_button 'Update'
+
+      price = convert_to_float(find('.cart-item-price'))
+      total = (price * find('.line_item_quantity').value.to_f).round(2)
+      pdp_total = convert_to_float(find('.cart-item-total'))
+
+      expect(total).to eq pdp_total
     end
     scenario 'empties cart'
     scenario 'removes product'
