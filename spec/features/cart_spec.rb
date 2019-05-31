@@ -1,5 +1,6 @@
 RSpec.feature 'Cart' do
   let(:router)              { Router.new }
+  let(:user)                { User.new }
   let(:product_slug)        { 'ruby-on-rails-tote' }
   let(:second_product_slug) { 'ruby-on-rails-baseball-jersey' }
   let(:coupon_code)         { { name: 'test', code: 'test1', discount: 20 } }
@@ -91,10 +92,47 @@ RSpec.feature 'Cart' do
 
       expect(total).to eq pdp_total
     end
-    scenario 'empties cart'
-    scenario 'removes product'
-    scenario 'removes product when quantity is 0'
-    scenario "User's cart is saved"
+
+    scenario 'empties cart' do
+      add_to_cart(second_product_slug, 3)
+
+      find('#clear_cart_link input').click
+
+      expect(page).to have_css('.alert-info', text: 'Your cart is empty')
+    end
+
+    scenario 'removes product' do
+      find('.delete').click
+
+      expect(page).to have_css('.alert-info', text: 'Your cart is empty')
+    end
+
+    scenario 'removes product when quantity is 0' do
+      find('.line_item_quantity').set 0
+
+      click_button 'Update'
+
+      expect(page).to have_css('.alert-info', text: 'Your cart is empty')
+    end
+
+    scenario "User's cart is saved" do
+      create_user(user.email, user.password)
+
+      visit_product(product_slug)
+      name = find('.product-title').text
+
+      visit router.cart_path
+
+      aggregate_failures do
+        expect(page).to have_css('h4', text: name)
+
+        logout
+        login(user)
+
+        visit router.cart_path
+        expect(page).to have_css('h4', text: name)
+      end
+    end
 
     # Create scenarios after making Checkout tests
     xscenario 'has tax'

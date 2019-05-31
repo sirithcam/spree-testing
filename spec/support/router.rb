@@ -40,4 +40,8 @@ class Router
   def cart_path
     '/cart'
   end
+
+  def signup_path
+    '/signup'
+  end
 end
