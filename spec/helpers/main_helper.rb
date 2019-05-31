@@ -69,12 +69,15 @@ module MainHelper
 
   def create_user(email, password, password_confirmation = password)
     visit Router.new.signup_path
-    
+
     fill_in 'Email', with: email
     fill_in 'Password', with: password
     fill_in 'Password Confirmation', with: password_confirmation
 
     find('input[value="Create"]').click
-    wait_for(error: 'User not created.') { page.has_css?('.alert-notice', text: 'Welcome! You have signed up successfully.') }
+
+    wait_for(error: 'User not created.') do
+      page.has_css?('.alert-notice', text: 'Welcome! You have signed up successfully.')
+    end
   end
 end

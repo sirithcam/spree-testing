@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.feature 'Cart' do
   let(:router)              { Router.new }
   let(:user)                { User.new }
@@ -67,7 +69,7 @@ RSpec.feature 'Cart' do
 
     scenario 'applies coupon code' do
       add_to_cart(second_product_slug, 3)
-      
+
       fill_in 'order_coupon_code', with: coupon_code[:code]
       click_button 'Apply'
 
