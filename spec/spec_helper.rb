@@ -32,7 +32,7 @@ RSpec.configure do |config|
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
-  config.before { Capybara.page.driver.browser.manage.window.resize_to(1240, 1400) }
+  config.before { Capybara.page.driver.browser.manage.window.resize_to(1340, 1400) }
 
   config.append_after { Capybara.reset_sessions! }
 end

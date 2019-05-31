@@ -8,7 +8,6 @@ RSpec.feature 'Product Listing Page' do
   scenario 'taxonomies has proper items' do
     taxons = all('.list-group-item').map(&:text)
     login_as_admin
-
     taxons.each do |taxon|
       visit "/t/#{taxon.downcase}"
       products = all('.product-body').map(&:text)
@@ -131,7 +130,7 @@ RSpec.feature 'Product Listing Page' do
     end
 
     scenario 'has Previous link' do
-      all('.pagination .page').reject { |page| page[:class].include? 'active' }.sample.find('a').click
+      click_unactive_pagination
 
       active = find('.pagination .active').text.to_i
       find('.pagination').click_link 'Prev'
@@ -140,7 +139,7 @@ RSpec.feature 'Product Listing Page' do
     end
 
     scenario 'has First link' do
-      all('.pagination .page').reject { |page| page[:class].include? 'active' }.sample.find('a').click
+      click_unactive_pagination
 
       find('.pagination').click_link 'First'
 
@@ -148,7 +147,8 @@ RSpec.feature 'Product Listing Page' do
     end
 
     scenario 'has proper active page' do
-      all('.pagination .page').reject { |page| page[:class].include? 'active' }.sample.find('a').click
+      click_unactive_pagination
+
       page_number = find('.pagination .active').text
 
       expect(page).to have_current_path "/?page=#{page_number}"

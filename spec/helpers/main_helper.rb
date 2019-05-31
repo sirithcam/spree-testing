@@ -49,4 +49,8 @@ module MainHelper
   def image_names(objects)
     objects.map { |image| image_name(image) }
   end
+
+  def click_unactive_pagination
+    all('.pagination .page').reject { |page| page[:class].include? 'active' }.sample.find('a').click
+  end
 end

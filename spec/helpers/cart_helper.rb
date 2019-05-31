@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module CartHelper
-  def add_to_cart(slug, _quantity = 1)
+  def add_to_cart(slug, quantity = 1)
     visit_product(slug)
 
     product_name = find('.product-title').text
-    find('#quantity').set 5
+    find('#quantity').set quantity
 
     find('#add-to-cart-button').click
 

@@ -48,11 +48,12 @@ RSpec.feature 'Product Detailed Page' do
 
     aggregate_failures do
       expect(page).to have_css('h4', text: product_name)
-      within('.cart-item-quantity') { expect(page).to have_css('input[value="5"]') }
+      expect(page).to have_css('.cart-item-quantity input[value="5"]')
     end
   end
 
   scenario 'has properties' do
+    product_slug ||= find('#product_slug_field input').value
     find('#sidebar a', text: 'Properties').click
 
     while all('.product_property').size == 1
@@ -70,7 +71,7 @@ RSpec.feature 'Product Detailed Page' do
     end
 
     visit_product(product_slug)
-
+    puts product_slug
     aggregate_failures do
       expect(page).to have_css('.product-section-title', text: 'Properties')
 
