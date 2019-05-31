@@ -9,7 +9,7 @@ module MainHelper
 
     Selenium::WebDriver::Wait.new(timeout: default_options[:seconds]).until { yield }
   rescue Selenium::WebDriver::Error::TimeOutError
-    default_options[:error].nil? ? false : raise(error)
+    default_options[:error].nil? ? false : raise(default_options[:error])
   end
 
   def scroll_to_bottom
@@ -29,5 +29,28 @@ module MainHelper
     fill_in 'Email', with: ENV['ADMIN_LOGIN']
     fill_in 'Password', with: ENV['ADMIN_PASSWORD']
     find('.btn-lg').click
+
+    wait_for(error: 'Not logged in.') { page.has_css?('.alert-success', text: 'Logged in successfully') }
+  end
+
+  def logout
+    visit Router.new.logout_path
+    wait_for(error: 'Not logged out.') { page.has_css?('.alert-notice', text: 'Signed out successfully.') }
+  end
+
+  def visit_product(slug)
+    visit "#{Router.new.products_path}/#{slug}"
+  end
+
+  def image_name(object)
+    object[:src].split('/').last
+  end
+
+  def image_names(objects)
+    objects.map { |image| image_name(image) }
+  end
+
+  def click_unactive_pagination
+    all('.pagination .page').reject { |page| page[:class].include? 'active' }.sample.find('a').click
   end
 end
