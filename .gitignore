@@ -3,3 +3,4 @@
 .env
 .*.sw*
 logs/
+tmp/

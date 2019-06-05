@@ -24,6 +24,15 @@ module MainHelper
     Capybara.current_session.driver.browser.execute_script('arguments[0].scrollIntoView(true);', element.native)
   end
 
+  def login(user)
+    visit Router.new.login_path
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
+    find('.btn-lg').click
+
+    wait_for(error: 'Not logged in.') { page.has_css?('.alert-success', text: 'Logged in successfully') }
+  end
+
   def login_as_admin
     visit Router.new.login_path
     fill_in 'Email', with: ENV['ADMIN_LOGIN']
@@ -52,5 +61,23 @@ module MainHelper
 
   def click_unactive_pagination
     all('.pagination .page').reject { |page| page[:class].include? 'active' }.sample.find('a').click
+  end
+
+  def convert_to_float(object)
+    object.text.delete('-$').to_f
+  end
+
+  def create_user(email, password, password_confirmation = password)
+    visit Router.new.signup_path
+
+    fill_in 'Email', with: email
+    fill_in 'Password', with: password
+    fill_in 'Password Confirmation', with: password_confirmation
+
+    find('input[value="Create"]').click
+
+    wait_for(error: 'User not created.') do
+      page.has_css?('.alert-notice', text: 'Welcome! You have signed up successfully.')
+    end
   end
 end
